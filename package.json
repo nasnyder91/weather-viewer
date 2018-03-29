@@ -1,0 +1,33 @@
+{
+  "name": "webpackstarter",
+  "version": "1.0.0",
+  "description": "Simple webpack starter kit utilizing css-loader, html-loader, and babel-loader.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "webpack --output ./dev/app.bundle.js --mode development",
+    "build": "webpack --output ./docs/app.bundle.js --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "author": "Nick Snyder",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.0.6",
+    "mini-css-extract-plugin": "^0.2.0",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "dependencies": {
+    "material-design-icons": "^3.0.1",
+    "materialize-css": "^1.0.0-beta"
+  }
+}
