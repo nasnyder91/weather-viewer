@@ -70,7 +70,6 @@ class UI {
   // Remove weather tab
   removeWeatherTab(id, callback){
     const tabs = Array.from(this.tabsList.children);
-    console.log(tabs);
     for(let i = 1; i < tabs.length; i++){
       if(tabs[i].children[0].attributes[1].value === id){
         this.tabsList.removeChild(tabs[i]);

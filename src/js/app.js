@@ -11,6 +11,7 @@ import '../assets/css/style.css';
 var weatherTabs;
 var addModal;
 var deleteModal;
+var fabs;
 
 
 // EVENT LISTENERS
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMaterialize();
 });
 // Weather tab clicked event listener
-document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
+// document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
 // Weather cards event listener for delete and refresh
@@ -39,16 +40,6 @@ function loadWeatherTabs(){
   const weatherLocs = storage.getWeatherLocs();
   weatherLocs.forEach((loc) => {
     ui.loadTab(loc.key, loc.city, loc.state);
-    // if(!storage.getWeatherData()){
-    //   getWeather(loc.city, loc.state, '#' + loc.key);
-    // } else{
-    //   const weatherData = storage.getWeatherData();
-    //   weatherData.forEach((data) => {
-    //     if(loc.key === data.key){
-    //       ui.fillTab(data.weather, '#' + data.key);
-    //     }
-    //   });
-    // }
   });
 }
 
@@ -68,8 +59,12 @@ function initTabs(){
   weatherTabs = M.Tabs.init(tabs, {
     swipeable: true,
     duration: 300,
-    //responsiveThreshold: The maximum width of the screen, in pixels, where the swipeable functionality initializes.,
-    //onShow: Callback when new tab is shown
+    // responsiveThreshold: '1200px',
+    onShow: () => {
+      if(weatherTabs){
+        handleTab(weatherTabs.$activeTabLink[0].attributes[1].value.substr(1))
+      }
+    }
   });
   weatherTabs.select(weatherTabs.$tabLinks[0].attributes[1].value.substr(1));
 }
@@ -88,10 +83,18 @@ function initModal(){
   deleteModal = M.Modal.init(deleteTab, {});
 }
 
-// Initialize floating action button
+// Initialize floating action buttons
 function initFAB(){
   const fab = document.querySelectorAll('.fixed-action-btn');
-  var instance = M.FloatingActionButton.init(fab, {});
+  fabs = M.FloatingActionButton.init(fab, {});
+}
+
+// Reinitialize floating action buttons
+function reinitFAB(){
+  fabs.forEach((fab) => {
+    fab.destroy();
+  });
+  initFAB();
 }
 
 // Show add tab modal
@@ -105,6 +108,7 @@ function addWeatherTab(){
     storage.addWeatherLoc({key, city, state});
     reinitTabs();
     weatherTabs.select(`${key}`);
+    reinitFAB();
   });
 }
 
@@ -137,38 +141,41 @@ function deleteWeatherTab(){
   storage.deleteWeatherData(currentTabKey);
 }
 
-// Weather tab clicked
-function tabClicked(e){
-  if(e.target.classList.contains('tabLink')){
-    const key = e.target.attributes.href.value.substr(1);
-    const locs = storage.getWeatherLocs();
-    let city;
-    let state;
-    locs.forEach((loc) => {
-      if(loc.key === key){
-        city = loc.city;
-        state = loc.state;
+// // Weather tab clicked
+// function tabClicked(e){
+//   if(e.target.classList.contains('tabLink')){
+//     handleTab(e.target.attributes.href.value.substr(1));
+//   }
+// }
+
+function handleTab(key){
+  const locs = storage.getWeatherLocs();
+  let city;
+  let state;
+  locs.forEach((loc) => {
+    if(loc.key === key){
+      city = loc.city;
+      state = loc.state;
+    }
+  });
+  let weatherData;
+  let locationData;
+  let contains;
+  if(storage.getWeatherData()){
+    weatherData = storage.getWeatherData();
+    weatherData.forEach((data) => {
+      if(data.key === key){
+        contains = true;
+        locationData = data.weather;
       }
     });
-    let weatherData;
-    let locationData;
-    let contains;
-    if(storage.getWeatherData()){
-      weatherData = storage.getWeatherData();
-      weatherData.forEach((data) => {
-        if(data.key === key){
-          contains = true;
-          locationData = data.weather;
-        }
-      });
-      if(contains){
-        ui.fillTab(locationData, '#' + key);
-      } else{
-        getWeather(city, state, '#' + key);
-      }
+    if(contains){
+      ui.fillTab(locationData, '#' + key);
     } else{
       getWeather(city, state, '#' + key);
     }
+  } else{
+    getWeather(city, state, '#' + key);
   }
 }
 
