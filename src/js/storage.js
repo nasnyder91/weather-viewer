@@ -5,13 +5,13 @@ class Storage {
     this.defaultWeatherLocs = [
       {
         key: 'default1',
-        city: 'Flemington',
-        state: 'NJ'
+        city: 'New York City',
+        state: 'NY'
       },
       {
         key: 'default2',
-        city: 'Pasadena',
-        state: 'MD'
+        city: 'Austin',
+        state: 'TX'
       },
       {
         key: 'default3',

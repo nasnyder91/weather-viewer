@@ -18,7 +18,6 @@ var fabs;
 // DOM loaded event listener
 document.addEventListener('DOMContentLoaded', () => {
   loadWeatherTabs();
-
   initMaterialize();
 });
 // Weather tab clicked event listener
@@ -123,11 +122,14 @@ function showDeleteModal(e){
 // Refresh current tab
 function refreshTab(e){
   if(e.target.classList.contains('refreshTab')){
-    const key = weatherTabs.$activeTabLink[0].attributes[1].value;
-    const loc = storage.getLocation(key.substr(1));
+    let key = weatherTabs.$activeTabLink[0].attributes[1].value;
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#') + 1);
+    }
+    const loc = storage.getLocation(key);
     const city = loc.city;
     const state = loc.state;
-    getWeather(city, state, key);
+    getWeather(city, state, '#' + key);
   }
 }
 
@@ -153,6 +155,8 @@ function deleteWeatherTab(){
 //     handleTab(key);
 //   }
 // }
+
+// End weather tab slide
 function tabSlideEnded(e){
   if(e.target.classList.contains('active')){
     let key = weatherTabs.$activeTabLink[0].attributes[1].value;
@@ -163,6 +167,7 @@ function tabSlideEnded(e){
   }
 }
 
+// Handle loading weather tab data
 function handleTab(key){
   const locs = storage.getWeatherLocs();
   let city;

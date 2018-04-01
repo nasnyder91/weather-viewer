@@ -27,19 +27,21 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab">refresh</i></a></li>
           </ul>
         </div>
-        <h1 class="red-text"><span class="location">LOCATION</span></h1>
-        <h4 class="red-text wOverview"><span class="w-overview">Weather Overview</span></h4>
-        <p class="red-text wTemp">TEMP: <span class="temp">F/C</span></p>
+        <h1 class="red-text location">LOCATION</h1>
+        <p class="red-text time">Observation Time</p>
+        <h4 class="red-text w-overview">Weather Overview</h4>
+        <p class="red-text">TEMP: <span class="temp">F/C</span></p>
         <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
         <ul class="collection">
+          <li class="collection-item">WEATHER: <span class="reveal-w-overview">WEATHER OVERVIEW</span></li>
           <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
-          <li class="collection-item"><span class="wind">Wind</span></li>
-          <li class="collection-item"><span class="humidity">Humidity</span></li>
-          <li class="collection-item"><span class="pressure">Pressure</span></li>
-          <li class="collection-item"><span class="wind-chill">Wind Chill</span></li>
+          <li class="collection-item">FEELS LIKE: <span class="feels-like">F/C</span></li>
+          <li class="collection-item">WIND: <span class="wind">Wind</span></li>
+          <li class="collection-item">HUMIDITY: <span class="humidity">Humidity</span></li>
+          <li class="collection-item">PRESSURE: <span class="pressure">Pressure</span></li>
         </ul>
       </div>
     `;
@@ -51,8 +53,19 @@ class UI {
     console.log(weather);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     targetTab.querySelector('.location').textContent = weather.display_location.full;
+    targetTab.querySelector('.time').textContent = weather.observation_time;
     targetTab.querySelector('.w-overview').textContent = weather.weather;
     targetTab.querySelector('.temp').textContent = weather.temperature_string;
+    targetTab.querySelector('.reveal-location').textContent = weather.display_location.full;
+    targetTab.querySelector('.reveal-w-overview').textContent = weather.weather;
+    targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
+    targetTab.querySelector('.feels-like').textContent = weather.feelslike_string;
+    targetTab.querySelector('.wind').textContent = weather.wind_string;
+    targetTab.querySelector('.humidity').textContent = weather.relative_humidity;
+    targetTab.querySelector('.pressure').textContent = weather.pressure_in + ' ' + weather.pressure_trend;
+    targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
+    targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
+
   }
 
   // Add new weather tab
