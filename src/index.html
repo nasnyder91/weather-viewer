@@ -16,13 +16,20 @@
           <span class="brand-logo">WeatherViewer</span>
           <ul class="right">
             <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons" id="addTab">add</i></a></li>
-            <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons">delete</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons" id="deleteTab">delete</i></a></li>
           </ul>
         </div>
       </div>
     </nav>
   </div>
 
+  <ul id="weatherTabs" class="tabs">
+  </ul>
+
+  <div id="weatherCards">
+  </div>
+
+  <!-- Add New Location Modal -->
   <div id="addModal" class="modal">
     <div class="modal-content">
       <h4>Add a New Weather Tab</h4>
@@ -47,69 +54,16 @@
     </div>
   </div>
 
-  <ul id="weatherTabs" class="tabs">
-    <li class="tab col s3"><a class="active tabLink" href="#test-swipe-1">Flemington, NJ</a></li>
-    <li class="tab col s3"><a class="tabLink" href="#test-swipe-2">Pasadena, MD</a></li>
-    <li class="tab col s3"><a class="tabLink" href="#test-swipe-3">Miami, FL</a></li>
-  </ul>
-
-  <div id="weatherCards">
-    <div id="test-swipe-1" class="card blue-grey darken-1">
-      <div class="card-content white-text center-align" style="background-image: url(https://cdn.shopify.com/s/files/1/1205/5946/products/Epic_Rain_Thunder_1024x1024.jpg?v=1497034556);">
-        <h1 class="red-text"><span class="location">LOCATION</span></h1>
-        <h4 class="red-text wOverview"><span class="w-overview">Weather Overview</span></h4>
-        <p class="red-text wTemp">TEMP: <span class="temp">F/C</span></p>
-        <a class="waves-effect activator btn">More...</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
-        <ul class="collection">
-          <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
-          <li class="collection-item"><span class="wind">Wind</span></li>
-          <li class="collection-item"><span class="humidity">Humidity</span></li>
-          <li class="collection-item"><span class="pressure">Pressure</span></li>
-          <li class="collection-item"><span class="wind-chill">Wind Chill</span></li>
-        </ul>
-      </div>
+  <!-- Delete current weather tab modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h3>Are you sure you want to delete the current weather tab?</h3>
     </div>
-    <div id="test-swipe-2" class="card blue-grey darken-1">
-      <div class="card-content white-text center-align" style="background-image: url(https://cdn.shopify.com/s/files/1/1205/5946/products/Epic_Rain_Thunder_1024x1024.jpg?v=1497034556);">
-        <h1 class="red-text"><span class="location">LOCATION</span></h1>
-        <h4 class="red-text wOverview"><span class="w-overview">Weather Overview</span></h4>
-        <p class="red-text wTemp">TEMP: <span class="temp">F/C</span></p>
-        <a class="waves-effect activator btn">More...</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
-        <ul class="collection">
-          <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
-          <li class="collection-item"><span class="wind">Wind</span></li>
-          <li class="collection-item"><span class="humidity">Humidity</span></li>
-          <li class="collection-item"><span class="pressure">Pressure</span></li>
-          <li class="collection-item"><span class="wind-chill">Wind Chill</span></li>
-        </ul>
-      </div>
-    </div>
-    <div id="test-swipe-3" class="card blue-grey darken-1">
-      <div class="card-content white-text center-align" style="background-image: url(https://cdn.shopify.com/s/files/1/1205/5946/products/Epic_Rain_Thunder_1024x1024.jpg?v=1497034556);">
-        <h1 class="red-text"><span class="location">LOCATION</span></h1>
-        <h4 class="red-text wOverview"><span class="w-overview">Weather Overview</span></h4>
-        <p class="red-text wTemp">TEMP: <span class="temp">F/C</span></p>
-        <a class="waves-effect activator btn">More...</a>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
-        <ul class="collection">
-          <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
-          <li class="collection-item"><span class="wind">Wind</span></li>
-          <li class="collection-item"><span class="humidity">Humidity</span></li>
-          <li class="collection-item"><span class="pressure">Pressure</span></li>
-          <li class="collection-item"><span class="wind-chill">Wind Chill</span></li>
-        </ul>
-      </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="confirmDeleteBtn">Confirm</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
     </div>
   </div>
-
 
 
 </body>

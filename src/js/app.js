@@ -1,7 +1,8 @@
 import M from 'materialize-css';
+import uuidv4 from 'uuid/v4';
 import { ui } from './ui';
 import { weather } from './weather';
-
+import { storage } from './storage';
 
 import 'materialize-css/dist/css/materialize.css';
 import '../assets/css/style.css';
@@ -9,22 +10,35 @@ import '../assets/css/style.css';
 
 var weatherTabs;
 var addModal;
+var deleteModal;
 
 
 // EVENT LISTENERS
 // DOM loaded event listener
 document.addEventListener('DOMContentLoaded', () => {
+  loadWeatherTabs();
+
   initMaterialize();
-  getWeather(document.querySelector('#weatherTabs').children[0].children[0].attributes.href.value);
 });
 // Weather tab clicked event listener
 document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
-// Confirm add weather
+// Delete weather tab event listener
+document.querySelector('#deleteTab').addEventListener('click', showDeleteModal);
+// Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
+// Confirm delete tab event listener
+document.querySelector('#confirmDeleteBtn').addEventListener('click', deleteWeatherTab);
 
-
+// Load tabs on startup
+function loadWeatherTabs(){
+  const weatherLocs = storage.getWeatherLocs();
+  weatherLocs.forEach((loc) => {
+    ui.loadTab(loc.key, loc.city, loc.state);
+    getWeather(loc.city, loc.state, '#' + loc.key);
+  });
+}
 
 // Initialize Materialize elements
 function initMaterialize(){
@@ -45,10 +59,18 @@ function initTabs(){
   });
 }
 
+// Reinitialize tabs after any changes
+function reinitTabs(){
+  weatherTabs.destroy();
+  initTabs();
+}
+
 // Initialize Modal
 function initModal(){
-  var modal = document.querySelector('.modal');
-  addModal = M.Modal.init(modal, {});
+  var addTab = document.querySelector('#addModal');
+  var deleteTab = document.querySelector('#deleteModal');
+  addModal = M.Modal.init(addTab, {});
+  deleteModal = M.Modal.init(deleteTab, {});
 }
 
 // Show add tab modal
@@ -58,23 +80,48 @@ function showAddModal(){
 
 // Add new weather tab to tabs
 function addWeatherTab(){
-  ui.addNewWeatherTab((city, state) => {
-    weatherTabs.destroy();
-    initTabs();
-    weatherTabs.select(`${city}_${state}`);
+  ui.addNewWeatherTab((key, city, state) => {
+    storage.addWeatherLoc({key, city, state});
+    reinitTabs();
+    weatherTabs.select(`${key}`);
   });
+}
+
+// Show delete tab modal
+function showDeleteModal(){
+  deleteModal.open();
+}
+
+// Delete current weather tab
+function deleteWeatherTab(){
+  const currentTabKey = weatherTabs.$activeTabLink[0].attributes[1].value;
+  ui.removeWeatherTab(currentTabKey, () => {
+    reinitTabs();
+    weatherTabs.select(`${storage.getWeatherLocs()[0].key}`);
+  });
+  storage.deleteWeatherLoc(currentTabKey);
 }
 
 // Weather tab clicked
 function tabClicked(e){
   if(e.target.classList.contains('tabLink')){
-    getWeather(e.target.attributes.href.value);
+    const key = e.target.attributes.href.value.substr(1);
+    const locs = storage.getWeatherLocs();
+    let city;
+    let state;
+    locs.forEach((loc) => {
+      if(loc.key === key){
+        city = loc.city;
+        state = loc.state;
+      }
+    });
+    getWeather(city, state, e.target.attributes.href.value);
   }
 }
 
 // Get weather
-function getWeather(targetTabID){
-  weather.getWeather('Flemington', 'NJ')
+function getWeather(city, state, targetTabID){
+  weather.getWeather(city, state)
     .then(results => {
       ui.fillTab(results, targetTabID);
     })

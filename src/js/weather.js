@@ -10,12 +10,6 @@ class Weather {
 
     return responseData.current_observation;
   }
-
-  // Change weather location
-  changeLocation(city, state){
-    this.city = city;
-    this.state = state;
-  }
 }
 
 export const weather = new Weather();
