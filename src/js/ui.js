@@ -24,7 +24,7 @@ class UI {
           <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
           <ul>
             <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons deleteTab">delete</i></a></li>
-            <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons">refresh</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab">refresh</i></a></li>
           </ul>
         </div>
         <h1 class="red-text"><span class="location">LOCATION</span></h1>
@@ -48,6 +48,7 @@ class UI {
 
   // Fill weather tab data
   fillTab(weather, targetTabID){
+    console.log(weather);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     targetTab.querySelector('.location').textContent = weather.display_location.full;
     targetTab.querySelector('.w-overview').textContent = weather.weather;
@@ -69,7 +70,8 @@ class UI {
   // Remove weather tab
   removeWeatherTab(id, callback){
     const tabs = Array.from(this.tabsList.children);
-    for(let i = 0; i < tabs.length; i++){
+    console.log(tabs);
+    for(let i = 1; i < tabs.length; i++){
       if(tabs[i].children[0].attributes[1].value === id){
         this.tabsList.removeChild(tabs[i]);
         break;

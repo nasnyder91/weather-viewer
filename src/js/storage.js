@@ -4,17 +4,17 @@ class Storage {
   constructor(){
     this.defaultWeatherLocs = [
       {
-        key: 'w' + uuidv4(),
+        key: 'default1',
         city: 'Flemington',
         state: 'NJ'
       },
       {
-        key: 'w' + uuidv4(),
+        key: 'default2',
         city: 'Pasadena',
         state: 'MD'
       },
       {
-        key: 'w' + uuidv4(),
+        key: 'default3',
         city: 'Denver',
         state: 'CO'
       }
@@ -34,6 +34,30 @@ class Storage {
     }
 
     return locs;
+  }
+
+  // Get single location from key
+  getLocation(key){
+    let locs;
+    let loc;
+
+    if(localStorage.getItem('weatherLocs') === null){
+      locs = this.defaultWeatherLocs;
+      locs.forEach((l) => {
+        if(l.key === key){
+          loc = l;
+        }
+      });
+    } else{
+      locs = JSON.parse(localStorage.getItem('weatherLocs'));
+      locs.forEach((l) => {
+        if(l.key === key){
+          loc = l;
+        }
+      });
+    }
+
+    return loc;
   }
 
   // Sets weather locations to local storage

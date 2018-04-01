@@ -24,8 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
-// Delete weather tab event listener
-document.querySelector('#weatherCards').addEventListener('click', showDeleteModal);
+// Weather cards event listener for delete and refresh
+document.querySelector('#weatherCards').addEventListener('click', (e) => {
+  showDeleteModal(e);
+  refreshTab(e);
+});
 // Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
 // Confirm delete tab event listener
@@ -36,16 +39,16 @@ function loadWeatherTabs(){
   const weatherLocs = storage.getWeatherLocs();
   weatherLocs.forEach((loc) => {
     ui.loadTab(loc.key, loc.city, loc.state);
-    if(!storage.getWeatherData()){
-      getWeather(loc.city, loc.state, '#' + loc.key);
-    } else{
-      const weatherData = storage.getWeatherData();
-      weatherData.forEach((data) => {
-        if(loc.key === data.key){
-          ui.fillTab(data.weather, '#' + data.key);
-        }
-      });
-    }
+    // if(!storage.getWeatherData()){
+    //   getWeather(loc.city, loc.state, '#' + loc.key);
+    // } else{
+    //   const weatherData = storage.getWeatherData();
+    //   weatherData.forEach((data) => {
+    //     if(loc.key === data.key){
+    //       ui.fillTab(data.weather, '#' + data.key);
+    //     }
+    //   });
+    // }
   });
 }
 
@@ -68,6 +71,7 @@ function initTabs(){
     //responsiveThreshold: The maximum width of the screen, in pixels, where the swipeable functionality initializes.,
     //onShow: Callback when new tab is shown
   });
+  weatherTabs.select(weatherTabs.$tabLinks[0].attributes[1].value.substr(1));
 }
 
 // Reinitialize tabs after any changes
@@ -111,6 +115,17 @@ function showDeleteModal(e){
   }
 }
 
+// Refresh current tab
+function refreshTab(e){
+  if(e.target.classList.contains('refreshTab')){
+    const key = weatherTabs.$activeTabLink[0].attributes[1].value;
+    const loc = storage.getLocation(key.substr(1));
+    const city = loc.city;
+    const state = loc.state;
+    getWeather(city, state, key);
+  }
+}
+
 // Delete current weather tab
 function deleteWeatherTab(){
   const currentTabKey = weatherTabs.$activeTabLink[0].attributes[1].value;
@@ -135,18 +150,24 @@ function tabClicked(e){
         state = loc.state;
       }
     });
-    const weatherData = storage.getWeatherData();
+    let weatherData;
     let locationData;
-
-    weatherData.forEach((data) => {
-      if(data.key === key){
-        locationData = {key: data.key, weather: data.weather};
+    let contains;
+    if(storage.getWeatherData()){
+      weatherData = storage.getWeatherData();
+      weatherData.forEach((data) => {
+        if(data.key === key){
+          contains = true;
+          locationData = data.weather;
+        }
+      });
+      if(contains){
+        ui.fillTab(locationData, '#' + key);
+      } else{
+        getWeather(city, state, '#' + key);
       }
-    });
-    if(locationData){
-      ui.fillTab(locationData.weather, '#' + locationData.key);
     } else{
-      getWeather(city, state, e.target.attributes.href.value);
+      getWeather(city, state, '#' + key);
     }
   }
 }
