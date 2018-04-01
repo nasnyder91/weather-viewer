@@ -9,7 +9,7 @@ class UI {
   // Load tabs
   loadTab(key, city, state){
     const newTab = document.createElement('li');
-    newTab.className = 'tab col s3';
+    newTab.className = 'tab';
     newTab.innerHTML = `
       <a class="tabLink" href="#${key}">${city}, ${state}</a>
     `;
@@ -20,6 +20,13 @@ class UI {
     newCard.id = `${key}`;
     newCard.innerHTML = `
       <div class="card-content white-text center-align" style="background-image: url(https://cdn.shopify.com/s/files/1/1205/5946/products/Epic_Rain_Thunder_1024x1024.jpg?v=1497034556);">
+        <div class="fixed-action-btn">
+          <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
+          <ul>
+            <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons deleteTab">delete</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons">refresh</i></a></li>
+          </ul>
+        </div>
         <h1 class="red-text"><span class="location">LOCATION</span></h1>
         <h4 class="red-text wOverview"><span class="w-overview">Weather Overview</span></h4>
         <p class="red-text wTemp">TEMP: <span class="temp">F/C</span></p>
@@ -41,7 +48,6 @@ class UI {
 
   // Fill weather tab data
   fillTab(weather, targetTabID){
-    console.log(weather);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     targetTab.querySelector('.location').textContent = weather.display_location.full;
     targetTab.querySelector('.w-overview').textContent = weather.weather;

@@ -21,6 +21,8 @@ class Storage {
     ]
   }
 
+  // ---------------------------------------- LOCAL STORAGE -----------------------------------------------------
+
   // Returns weather locations from local storage or default locations
   getWeatherLocs(){
     let locs;
@@ -60,6 +62,49 @@ class Storage {
     });
 
     localStorage.setItem('weatherLocs', JSON.stringify(locs));
+  }
+
+  // ---------------------------------------- SESSION STORAGE -----------------------------------------------------
+
+  // Get weather data
+  getWeatherData(){
+    let data;
+
+    if(sessionStorage.getItem('weatherData') === null){
+      data = false;
+    } else{
+      data = JSON.parse(sessionStorage.getItem('weatherData'));
+    }
+
+    return data;
+  }
+
+  // Set weather data
+  addWeatherData(key, weather){
+    let data;
+
+    if(sessionStorage.getItem('weatherData') === null){
+      data = [];
+      data.push({key, weather});
+      sessionStorage.setItem('weatherData', JSON.stringify(data));
+    } else{
+      data = JSON.parse(sessionStorage.getItem('weatherData'));
+      data.push({key, weather});
+      sessionStorage.setItem('weatherData', JSON.stringify(data));
+    }
+  }
+
+  // Delete weather data
+  deleteWeatherData(key){
+    let weatherData = JSON.parse(sessionStorage.getItem('weatherData'));
+
+    weatherData.forEach((data, index) => {
+      if(data.key === key.substr(1)){
+        weatherData.splice(index, 1);
+      }
+    });
+
+    sessionStorage.setItem('weatherData', JSON.stringify(weatherData));
   }
 }
 

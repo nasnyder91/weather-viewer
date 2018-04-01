@@ -25,7 +25,7 @@ document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
 // Delete weather tab event listener
-document.querySelector('#deleteTab').addEventListener('click', showDeleteModal);
+document.querySelector('#weatherCards').addEventListener('click', showDeleteModal);
 // Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
 // Confirm delete tab event listener
@@ -36,7 +36,16 @@ function loadWeatherTabs(){
   const weatherLocs = storage.getWeatherLocs();
   weatherLocs.forEach((loc) => {
     ui.loadTab(loc.key, loc.city, loc.state);
-    getWeather(loc.city, loc.state, '#' + loc.key);
+    if(!storage.getWeatherData()){
+      getWeather(loc.city, loc.state, '#' + loc.key);
+    } else{
+      const weatherData = storage.getWeatherData();
+      weatherData.forEach((data) => {
+        if(loc.key === data.key){
+          ui.fillTab(data.weather, '#' + data.key);
+        }
+      });
+    }
   });
 }
 
@@ -45,6 +54,8 @@ function initMaterialize(){
   initTabs();
 
   initModal();
+
+  initFAB();
 }
 
 // Initialize tabs
@@ -73,6 +84,12 @@ function initModal(){
   deleteModal = M.Modal.init(deleteTab, {});
 }
 
+// Initialize floating action button
+function initFAB(){
+  const fab = document.querySelectorAll('.fixed-action-btn');
+  var instance = M.FloatingActionButton.init(fab, {});
+}
+
 // Show add tab modal
 function showAddModal(){
   addModal.open();
@@ -88,8 +105,10 @@ function addWeatherTab(){
 }
 
 // Show delete tab modal
-function showDeleteModal(){
-  deleteModal.open();
+function showDeleteModal(e){
+  if(e.target.classList.contains('deleteTab')){
+    deleteModal.open();
+  }
 }
 
 // Delete current weather tab
@@ -100,6 +119,7 @@ function deleteWeatherTab(){
     weatherTabs.select(`${storage.getWeatherLocs()[0].key}`);
   });
   storage.deleteWeatherLoc(currentTabKey);
+  storage.deleteWeatherData(currentTabKey);
 }
 
 // Weather tab clicked
@@ -115,7 +135,19 @@ function tabClicked(e){
         state = loc.state;
       }
     });
-    getWeather(city, state, e.target.attributes.href.value);
+    const weatherData = storage.getWeatherData();
+    let locationData;
+
+    weatherData.forEach((data) => {
+      if(data.key === key){
+        locationData = {key: data.key, weather: data.weather};
+      }
+    });
+    if(locationData){
+      ui.fillTab(locationData.weather, '#' + locationData.key);
+    } else{
+      getWeather(city, state, e.target.attributes.href.value);
+    }
   }
 }
 
@@ -123,6 +155,7 @@ function tabClicked(e){
 function getWeather(city, state, targetTabID){
   weather.getWeather(city, state)
     .then(results => {
+      storage.addWeatherData(targetTabID.substr(1), results);
       ui.fillTab(results, targetTabID);
     })
     .catch(err => console.log(err));
