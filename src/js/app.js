@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 // Weather tab clicked event listener
 // document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
+document.querySelector('#weatherTabs').addEventListener('transitionend', tabSlideEnded);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
 // Weather cards event listener for delete and refresh
@@ -60,11 +61,11 @@ function initTabs(){
     swipeable: true,
     duration: 300,
     // responsiveThreshold: '1200px',
-    onShow: () => {
-      if(weatherTabs){
-        handleTab(weatherTabs.$activeTabLink[0].attributes[1].value.substr(1))
-      }
-    }
+    // onShow: () => {
+    //   if(weatherTabs){
+    //     handleTab(weatherTabs.$activeTabLink[0].attributes[1].value.substr(1))
+    //   }
+    // }
   });
   weatherTabs.select(weatherTabs.$tabLinks[0].attributes[1].value.substr(1));
 }
@@ -134,19 +135,33 @@ function refreshTab(e){
 function deleteWeatherTab(){
   const currentTabKey = weatherTabs.$activeTabLink[0].attributes[1].value;
   ui.removeWeatherTab(currentTabKey, () => {
+    storage.deleteWeatherLoc(currentTabKey);
+    storage.deleteWeatherData(currentTabKey);
     reinitTabs();
     weatherTabs.select(`${storage.getWeatherLocs()[0].key}`);
   });
-  storage.deleteWeatherLoc(currentTabKey);
-  storage.deleteWeatherData(currentTabKey);
+
 }
 
-// // Weather tab clicked
+// Weather tab clicked
 // function tabClicked(e){
 //   if(e.target.classList.contains('tabLink')){
-//     handleTab(e.target.attributes.href.value.substr(1));
+//     let key = e.target.attributes.href.value;
+//     if(key.includes('#')){
+//       key = key.slice(key.indexOf('#') + 1);
+//     }
+//     handleTab(key);
 //   }
 // }
+function tabSlideEnded(e){
+  if(e.target.classList.contains('active')){
+    let key = weatherTabs.$activeTabLink[0].attributes[1].value;
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#') + 1);
+    }
+    handleTab(key);
+  }
+}
 
 function handleTab(key){
   const locs = storage.getWeatherLocs();
@@ -183,7 +198,7 @@ function handleTab(key){
 function getWeather(city, state, targetTabID){
   weather.getWeather(city, state)
     .then(results => {
-      storage.addWeatherData(targetTabID.substr(1), results);
+      storage.addWeatherData(targetTabID, results);
       ui.fillTab(results, targetTabID);
     })
     .catch(err => console.log(err));

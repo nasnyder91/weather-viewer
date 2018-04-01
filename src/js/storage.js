@@ -41,6 +41,10 @@ class Storage {
     let locs;
     let loc;
 
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#')+1);
+    }
+
     if(localStorage.getItem('weatherLocs') === null){
       locs = this.defaultWeatherLocs;
       locs.forEach((l) => {
@@ -78,14 +82,21 @@ class Storage {
   // Delete weather location
   deleteWeatherLoc(key){
     let locs = JSON.parse(localStorage.getItem('weatherLocs'));
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#')+1);
+    }
 
-    locs.forEach((loc, index) => {
-      if(loc.key === key.substr(1)){
-        locs.splice(index, 1);
-      }
-    });
+    if(!locs){
+      return;
+    } else{
+      locs.forEach((loc, index) => {
+        if(loc.key === key){
+          locs.splice(index, 1);
+        }
+      });
 
-    localStorage.setItem('weatherLocs', JSON.stringify(locs));
+      localStorage.setItem('weatherLocs', JSON.stringify(locs));
+    }
   }
 
   // ---------------------------------------- SESSION STORAGE -----------------------------------------------------
@@ -106,6 +117,9 @@ class Storage {
   // Set weather data
   addWeatherData(key, weather){
     let data;
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#')+1);
+    }
 
     if(sessionStorage.getItem('weatherData') === null){
       data = [];
@@ -121,9 +135,12 @@ class Storage {
   // Delete weather data
   deleteWeatherData(key){
     let weatherData = JSON.parse(sessionStorage.getItem('weatherData'));
+    if(key.includes('#')){
+      key = key.slice(key.indexOf('#')+1);
+    }
 
     weatherData.forEach((data, index) => {
-      if(data.key === key.substr(1)){
+      if(data.key === key){
         weatherData.splice(index, 1);
       }
     });
