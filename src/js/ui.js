@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4';
+import { backgrounds } from './backgrounds';
 
 class UI {
   constructor(){
@@ -19,7 +20,7 @@ class UI {
     newCard.className = 'card blue-grey darken-1';
     newCard.id = `${key}`;
     newCard.innerHTML = `
-      <div class="card-content white-text center-align" style="background-image: url(https://cdn.shopify.com/s/files/1/1205/5946/products/Epic_Rain_Thunder_1024x1024.jpg?v=1497034556);">
+      <div class="card-content white-text center-align">
         <div class="fixed-action-btn">
           <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
           <ul>
@@ -52,6 +53,8 @@ class UI {
   fillTab(weather, targetTabID){
     console.log(weather);
     const targetTab = this.weatherCards.querySelector(targetTabID);
+    const cardBG = backgrounds.getBackground(weather.weather);
+    targetTab.style.backgroundImage = `url(${cardBG})`;
     targetTab.querySelector('.location').textContent = weather.display_location.full;
     targetTab.querySelector('.time').textContent = weather.observation_time;
     targetTab.querySelector('.w-overview').textContent = weather.weather;

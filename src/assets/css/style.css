@@ -11,10 +11,10 @@ body,html{
   height:100%;
 }
 
-.card-content {
+.card {
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 .carousel {

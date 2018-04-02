@@ -48,8 +48,15 @@ module.exports = {
         loader: 'url-loader?limit=10000&mimetype=application/font-woff'
       },
       {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader' 
+        test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader',
+        options: {
+          name: 'img/[hash].[ext]?'
+        }
       }
     ]
   },
