@@ -115,7 +115,7 @@ class Storage {
   }
 
   // Set weather data
-  addWeatherData(key, weather){
+  addWeatherData(key, weather, forecast){
     let data;
     if(key.includes('#')){
       key = key.slice(key.indexOf('#')+1);
@@ -123,11 +123,11 @@ class Storage {
 
     if(sessionStorage.getItem('weatherData') === null){
       data = [];
-      data.push({key, weather});
+      data.push({key, weather, forecast});
       sessionStorage.setItem('weatherData', JSON.stringify(data));
     } else{
       data = JSON.parse(sessionStorage.getItem('weatherData'));
-      data.push({key, weather});
+      data.push({key, weather, forecast});
       sessionStorage.setItem('weatherData', JSON.stringify(data));
     }
   }

@@ -14,11 +14,11 @@ class Weather {
 
   // Fetch 3 day forcast from api
   async getForecast(city, state){
-    console.log('Pulling forcast from api');
+    console.log('Pulling forecast from api');
     const response = await fetch(`http://api.wunderground.com/api/${this.apiKey}/forecast/q/${state}/${city}.json`);
     const responseData = await response.json();
 
-    console.log(responseData);
+    return responseData.forecast.simpleforecast.forecastday;
   }
 }
 

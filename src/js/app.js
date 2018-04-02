@@ -180,6 +180,7 @@ function handleTab(key){
   });
   let weatherData;
   let locationData;
+  let forecastData;
   let contains;
   if(storage.getWeatherData()){
     weatherData = storage.getWeatherData();
@@ -187,10 +188,11 @@ function handleTab(key){
       if(data.key === key){
         contains = true;
         locationData = data.weather;
+        forecastData = data.forecast;
       }
     });
     if(contains){
-      ui.fillTab(locationData, '#' + key);
+      ui.fillTab(locationData, forecastData, '#' + key);
     } else{
       getWeather(city, state, '#' + key);
     }
@@ -201,10 +203,26 @@ function handleTab(key){
 
 // Get weather
 function getWeather(city, state, targetTabID){
+  let weatherConditions;
+  let forecast;
   weather.getWeather(city, state)
-    .then(results => {
-      storage.addWeatherData(targetTabID, results);
-      ui.fillTab(results, targetTabID);
+    .then(weatherResults => {
+      weatherConditions = weatherResults;
+      console.log(weatherConditions);
+    }).then(() => {
+      weather.getForecast(city, state)
+        .then(forecastResults => {
+          forecast = forecastResults;
+          console.log(forecast);
+          storage.addWeatherData(targetTabID, weatherConditions, forecast);
+          ui.fillTab(weatherConditions, forecast, targetTabID);
+        })
+        .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
+
+
+
+
+
 }

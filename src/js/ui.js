@@ -50,8 +50,8 @@ class UI {
   }
 
   // Fill weather tab data
-  fillTab(weather, targetTabID){
-    console.log(weather);
+  fillTab(weather, forecast, targetTabID){
+    // console.log(weather, forecast);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     const cardBG = backgrounds.getBackground(weather.weather);
     targetTab.style.backgroundImage = `url(${cardBG})`;
