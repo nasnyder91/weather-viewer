@@ -28,6 +28,7 @@ document.querySelector('#addTab').addEventListener('click', showAddModal);
 document.querySelector('#weatherCards').addEventListener('click', (e) => {
   showDeleteModal(e);
   refreshTab(e);
+  arrowClicked(e);
 });
 // Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
@@ -135,6 +136,19 @@ function deleteWeatherTab(){
     reinitTabs();
     weatherTabs.select(`${storage.getWeatherLocs()[0].key}`);
   });
+}
+
+// Left or right arrow clicked
+function arrowClicked(e){
+  let newTab;
+  if((e.target.classList.contains('leftArrow')) && (weatherTabs.index !== 0)){
+    newTab = weatherTabs.$tabLinks[weatherTabs.index - 1].attributes[1].value.substr(1);
+    weatherTabs.select(newTab);
+  }
+  if((e.target.classList.contains('rightArrow')) && (weatherTabs.index !== weatherTabs.$tabLinks.length - 1)){
+    newTab = weatherTabs.$tabLinks[weatherTabs.index + 1].attributes[1].value.substr(1);
+    weatherTabs.select(newTab);
+  }
 
 }
 

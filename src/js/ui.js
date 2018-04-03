@@ -106,15 +106,15 @@ class UI {
     `;
 
     const leftArrow = document.createElement('a');
-    leftArrow.className = 'leftArrow arrow valign-wrapper waves-effect';
+    leftArrow.className = 'leftArrow arrow valign-wrapper';
     leftArrow.innerHTML = `
-      <i class="medium material-icons">keyboard_arrow_left</i>
+      <i class="medium material-icons leftArrow">keyboard_arrow_left</i>
     `;
 
     const rightArrow = document.createElement('a');
-    rightArrow.className = 'rightArrow arrow valign-wrapper waves-effect';
+    rightArrow.className = 'rightArrow arrow valign-wrapper';
     rightArrow.innerHTML = `
-      <i class="medium material-icons">keyboard_arrow_right</i>
+      <i class="medium material-icons rightArrow">keyboard_arrow_right</i>
     `;
 
     newCard.appendChild(spinner);
