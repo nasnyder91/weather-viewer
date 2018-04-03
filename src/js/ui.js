@@ -28,11 +28,51 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab">refresh</i></a></li>
           </ul>
         </div>
-        <h1 class="red-text location">LOCATION</h1>
-        <p class="red-text time">Observation Time</p>
-        <h4 class="red-text w-overview">Weather Overview</h4>
-        <p class="red-text">TEMP: <span class="temp">F/C</span></p>
+        <h1 class="red-text location"></h1>
+        <p class="red-text time"></p>
+        <h4 class="red-text w-overview"></h4>
+        <p class="red-text">TEMP: <span class="temp"></span></p>
         <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
+        <div class="row">
+          <div class="col s8 offset-s2">
+            <div class="col s4">
+              <div class="card small half-opaque z-depth-5">
+                <div class="card-content black-text">
+                  <span class="card-title date1">DATE</span>
+                  <img class="icon1" src="" alt="" />
+                  <p class="high1"></p>
+                  <p class="low1"></p>
+                  <br />
+                  <p class="wind1"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col s4">
+              <div class="card small half-opaque z-depth-5">
+                <div class="card-content black-text">
+                  <span class="card-title date2">DATE</span>
+                  <img class="icon2" src="" alt="" />
+                  <p class="high2"></p>
+                  <p class="low2"></p>
+                  <br />
+                  <p class="wind2"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col s4">
+              <div class="card small half-opaque z-depth-5">
+                <div class="card-content black-text">
+                  <span class="card-title date3">DATE</span>
+                  <img class="icon3" src="" alt="" />
+                  <p class="high3"></p>
+                  <p class="low3"></p>
+                  <br />
+                  <p class="wind3"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="card-reveal">
         <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
@@ -46,12 +86,47 @@ class UI {
         </ul>
       </div>
     `;
+
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner cover valign-wrapper bgDarkTransparent';
+    spinner.innerHTML = `
+      <div class="preloader-wrapper big active centered">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const leftArrow = document.createElement('a');
+    leftArrow.className = 'leftArrow arrow valign-wrapper waves-effect';
+    leftArrow.innerHTML = `
+      <i class="medium material-icons">keyboard_arrow_left</i>
+    `;
+
+    const rightArrow = document.createElement('a');
+    rightArrow.className = 'rightArrow arrow valign-wrapper waves-effect';
+    rightArrow.innerHTML = `
+      <i class="medium material-icons">keyboard_arrow_right</i>
+    `;
+
+    newCard.appendChild(spinner);
+    newCard.appendChild(leftArrow);
+    newCard.appendChild(rightArrow);
+
     this.weatherCards.appendChild(newCard);
   }
 
   // Fill weather tab data
   fillTab(weather, forecast, targetTabID){
-    // console.log(weather, forecast);
+    console.log(weather, forecast);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     const cardBG = backgrounds.getBackground(weather.weather);
     targetTab.style.backgroundImage = `url(${cardBG})`;
@@ -68,7 +143,37 @@ class UI {
     targetTab.querySelector('.pressure').textContent = weather.pressure_in + ' ' + weather.pressure_trend;
     targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
     targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
+    // FORECAST
+    targetTab.querySelector('.date1').textContent = `${forecast[1].date.weekday} ${forecast[1].date.month}/${forecast[1].date.day}`;
+    targetTab.querySelector('.date2').textContent = `${forecast[2].date.weekday} ${forecast[2].date.month}/${forecast[2].date.day}`;
+    targetTab.querySelector('.date3').textContent = `${forecast[3].date.weekday} ${forecast[3].date.month}/${forecast[3].date.day}`;
+    targetTab.querySelector('.icon1').src = `https://icons.wxug.com/i/c/k/${forecast[1].icon}.gif`;
+    targetTab.querySelector('.icon1').alt = `${forecast[1].icon}`;
+    targetTab.querySelector('.icon2').src = `https://icons.wxug.com/i/c/k/${forecast[2].icon}.gif`;
+    targetTab.querySelector('.icon2').alt = `${forecast[2].icon}`;
+    targetTab.querySelector('.icon3').src = `https://icons.wxug.com/i/c/k/${forecast[3].icon}.gif`;
+    targetTab.querySelector('.icon3').alt = `${forecast[3].icon}`;
+    targetTab.querySelector('.high1').textContent = `High: ${forecast[1].high.fahrenheit} F (${forecast[1].high.celsius} C)`;
+    targetTab.querySelector('.low1').textContent = `Low: ${forecast[1].low.fahrenheit} F (${forecast[1].low.celsius} C)`;
+    targetTab.querySelector('.high2').textContent = `High: ${forecast[2].high.fahrenheit} F (${forecast[2].high.celsius} C)`;
+    targetTab.querySelector('.low2').textContent = `Low: ${forecast[2].low.fahrenheit} F (${forecast[2].low.celsius} C)`;
+    targetTab.querySelector('.high3').textContent = `High: ${forecast[3].high.fahrenheit} F (${forecast[3].high.celsius} C)`;
+    targetTab.querySelector('.low3').textContent = `Low: ${forecast[3].low.fahrenheit} F (${forecast[3].low.celsius} C)`;
+    targetTab.querySelector('.wind1').textContent = `Wind: ${forecast[1].avewind.dir} at ${forecast[1].avewind.mph} to ${forecast[1].maxwind.mph} mph`;
+    targetTab.querySelector('.wind2').textContent = `Wind: ${forecast[2].avewind.dir} at ${forecast[2].avewind.mph} to ${forecast[2].maxwind.mph} mph`;
+    targetTab.querySelector('.wind3').textContent = `Wind: ${forecast[3].avewind.dir} at ${forecast[3].avewind.mph} to ${forecast[3].maxwind.mph} mph`;
+  }
 
+  // Show loading spinner
+  showSpinner(targetTabID){
+    const targetTab = this.weatherCards.querySelector(targetTabID);
+    targetTab.querySelector('.spinner').style.display = 'flex';
+  }
+
+  // Hide loading spinner
+  hideSpinner(targetTabID){
+    const targetTab = this.weatherCards.querySelector(targetTabID);
+    targetTab.querySelector('.spinner').style.display = 'none';
   }
 
   // Add new weather tab

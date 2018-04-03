@@ -20,8 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadWeatherTabs();
   initMaterialize();
 });
-// Weather tab clicked event listener
-// document.querySelector('#weatherTabs').addEventListener('click', tabClicked);
+// Weather tab transition end event listener
 document.querySelector('#weatherTabs').addEventListener('transitionend', tabSlideEnded);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
@@ -58,13 +57,7 @@ function initTabs(){
 
   weatherTabs = M.Tabs.init(tabs, {
     swipeable: true,
-    duration: 300,
-    // responsiveThreshold: '1200px',
-    // onShow: () => {
-    //   if(weatherTabs){
-    //     handleTab(weatherTabs.$activeTabLink[0].attributes[1].value.substr(1))
-    //   }
-    // }
+    duration: 300
   });
   weatherTabs.select(weatherTabs.$tabLinks[0].attributes[1].value.substr(1));
 }
@@ -145,17 +138,6 @@ function deleteWeatherTab(){
 
 }
 
-// Weather tab clicked
-// function tabClicked(e){
-//   if(e.target.classList.contains('tabLink')){
-//     let key = e.target.attributes.href.value;
-//     if(key.includes('#')){
-//       key = key.slice(key.indexOf('#') + 1);
-//     }
-//     handleTab(key);
-//   }
-// }
-
 // End weather tab slide
 function tabSlideEnded(e){
   if(e.target.classList.contains('active')){
@@ -193,6 +175,7 @@ function handleTab(key){
     });
     if(contains){
       ui.fillTab(locationData, forecastData, '#' + key);
+      ui.hideSpinner('#' + key);
     } else{
       getWeather(city, state, '#' + key);
     }
@@ -205,24 +188,19 @@ function handleTab(key){
 function getWeather(city, state, targetTabID){
   let weatherConditions;
   let forecast;
+  ui.showSpinner(targetTabID);
   weather.getWeather(city, state)
     .then(weatherResults => {
       weatherConditions = weatherResults;
-      console.log(weatherConditions);
     }).then(() => {
       weather.getForecast(city, state)
         .then(forecastResults => {
           forecast = forecastResults;
-          console.log(forecast);
           storage.addWeatherData(targetTabID, weatherConditions, forecast);
           ui.fillTab(weatherConditions, forecast, targetTabID);
+          ui.hideSpinner(targetTabID);
         })
         .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
-
-
-
-
-
 }

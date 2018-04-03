@@ -18,5 +18,48 @@ body,html{
 }
 
 .carousel {
-  height: 75vh !important;
+  /* height: 90vh !important; */
+}
+
+.half-opaque {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.cover{
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.arrow{
+  position: absolute !important;
+  display: flex !important;
+  top: 0;
+  height: 100%;
+  width: 5%;
+  z-index: 0 !important;
+}
+
+.arrow:hover{
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.leftArrow{
+  left: 0;
+}
+
+.rightArrow{
+  right: 0;
+}
+
+.bgDarkTransparent{
+  background-color: rgba(0, 0, 0, 0.95) !important;
+}
+
+.centered{
+  margin-left: auto;
+  margin-right: auto;
 }
