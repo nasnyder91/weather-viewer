@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelector('#weatherTabs').addEventListener('transitionend', tabSlideEnded);
 // Add weather tab event listener
 document.querySelector('#addTab').addEventListener('click', showAddModal);
-// Weather cards event listener for delete and refresh
+// Weather cards event listener for delete, refresh, and arrows
 document.querySelector('#weatherCards').addEventListener('click', (e) => {
   showDeleteModal(e);
   refreshTab(e);
@@ -33,7 +33,7 @@ document.querySelector('#weatherCards').addEventListener('click', (e) => {
 // Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
 // Confirm delete tab event listener
-document.querySelector('#confirmDeleteBtn').addEventListener('click', deleteWeatherTab);
+document.querySelector('#confirmDeleteBtn').addEventListener('click', () => deleteWeatherTab());
 
 // Load tabs on startup
 function loadWeatherTabs(){
@@ -73,7 +73,9 @@ function reinitTabs(){
 function initModal(){
   var addTab = document.querySelector('#addModal');
   var deleteTab = document.querySelector('#deleteModal');
-  addModal = M.Modal.init(addTab, {});
+  addModal = M.Modal.init(addTab, {
+    onCloseStart: () => ui.hideAddErr()
+  });
   deleteModal = M.Modal.init(deleteTab, {});
 }
 
@@ -98,6 +100,11 @@ function showAddModal(){
 
 // Add new weather tab to tabs
 function addWeatherTab(){
+  if((document.querySelector('#newCity').value === '') || (document.querySelector('#newState').value === '')){
+    ui.showAddErr('Please enter both city and state/country');
+    return;
+  }
+  addModal.close();
   ui.addNewWeatherTab((key, city, state) => {
     storage.addWeatherLoc({key, city, state});
     reinitTabs();
@@ -128,8 +135,15 @@ function refreshTab(e){
 }
 
 // Delete current weather tab
-function deleteWeatherTab(){
-  const currentTabKey = weatherTabs.$activeTabLink[0].attributes[1].value;
+function deleteWeatherTab(key){
+  let currentTabKey;
+
+  if(!key){
+    currentTabKey = weatherTabs.$activeTabLink[0].attributes[1].value;
+  } else{
+    currentTabKey = key;
+  }
+
   ui.removeWeatherTab(currentTabKey, () => {
     storage.deleteWeatherLoc(currentTabKey);
     storage.deleteWeatherData(currentTabKey);
@@ -204,17 +218,22 @@ function getWeather(city, state, targetTabID){
   let forecast;
   ui.showSpinner(targetTabID);
   weather.getWeather(city, state)
-    .then(weatherResults => {
-      weatherConditions = weatherResults;
-    }).then(() => {
-      weather.getForecast(city, state)
-        .then(forecastResults => {
-          forecast = forecastResults;
-          storage.addWeatherData(targetTabID, weatherConditions, forecast);
-          ui.fillTab(weatherConditions, forecast, targetTabID);
-          ui.hideSpinner(targetTabID);
-        })
-        .catch(err => console.log(err));
+    .then(results => {
+      weatherConditions = results.current_observation;
+      forecast = results.forecast.simpleforecast.forecastday;
+      storage.addWeatherData(targetTabID, weatherConditions, forecast);
+      ui.fillTab(weatherConditions, forecast, targetTabID);
+      ui.hideSpinner(targetTabID);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(`ERROR: ${err.type} -- ${err.description}`);
+      if(err.type === 'querynotfound'){
+        showAddModal();
+        ui.showAddErr('The location you entered does not exist.  Please check your spelling and try again.');
+        deleteWeatherTab(targetTabID);
+      } else{
+        showAddModal();
+        ui.showAddErr('Something went wrong.  Please try again.');
+      }
+    });
 }

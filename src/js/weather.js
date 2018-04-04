@@ -6,19 +6,15 @@ class Weather {
   // Fetch weather from api
   async getWeather(city, state){
     console.log('Pulling weather from api');
-    const response = await fetch(`http://api.wunderground.com/api/${this.apiKey}/conditions/q/${state}/${city}.json`);
+    const response = await fetch(`https://api.wunderground.com/api/${this.apiKey}/conditions/forecast/q/${state}/${city}.json`);
     const responseData = await response.json();
 
-    return responseData.current_observation;
-  }
+    if(responseData.response.error){
+      throw responseData.response.error;
+    } else{
+      return responseData;
+    }
 
-  // Fetch 3 day forcast from api
-  async getForecast(city, state){
-    console.log('Pulling forecast from api');
-    const response = await fetch(`http://api.wunderground.com/api/${this.apiKey}/forecast/q/${state}/${city}.json`);
-    const responseData = await response.json();
-
-    return responseData.forecast.simpleforecast.forecastday;
   }
 }
 

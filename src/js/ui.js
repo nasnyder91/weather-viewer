@@ -1,5 +1,6 @@
 import uuidv4 from 'uuid/v4';
 import { backgrounds } from './backgrounds';
+import { storage } from './storage';
 
 class UI {
   constructor(){
@@ -126,7 +127,7 @@ class UI {
 
   // Fill weather tab data
   fillTab(weather, forecast, targetTabID){
-    console.log(weather, forecast);
+    // console.log(weather, forecast);
     const targetTab = this.weatherCards.querySelector(targetTabID);
     const cardBG = backgrounds.getBackground(weather.weather);
     targetTab.style.backgroundImage = `url(${cardBG})`;
@@ -176,6 +177,18 @@ class UI {
     targetTab.querySelector('.spinner').style.display = 'none';
   }
 
+  // Show error on add modal
+  showAddErr(msg){
+    const error = document.querySelector('.addErr');
+    error.textContent = msg;
+    error.style.display = 'block';
+  }
+
+  // Hide error on add modal
+  hideAddErr(){
+    document.querySelector('.addErr').style.display = 'none';
+  }
+
   // Add new weather tab
   addNewWeatherTab(callback){
     const key = 'w' + uuidv4();
@@ -191,6 +204,9 @@ class UI {
   // Remove weather tab
   removeWeatherTab(id, callback){
     const tabs = Array.from(this.tabsList.children);
+    if(!storage.getLocation(id)){
+      return;
+    };
     for(let i = 1; i < tabs.length; i++){
       if(tabs[i].children[0].attributes[1].value === id){
         this.tabsList.removeChild(tabs[i]);

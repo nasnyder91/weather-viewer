@@ -36,7 +36,7 @@ class Storage {
     return locs;
   }
 
-  // Get single location from key
+  // Get single location from key, else returns false
   getLocation(key){
     let locs;
     let loc;
@@ -59,6 +59,10 @@ class Storage {
           loc = l;
         }
       });
+    }
+
+    if(!loc){
+      return false;
     }
 
     return loc;
