@@ -171,13 +171,20 @@ class UI {
     const card = this.weatherCards.querySelector(`#${key}`);
     const leftArrow = card.querySelector('.leftArrow');
     const rightArrow = card.querySelector('.rightArrow');
+    console.log(currIndex, lastIndex);
 
     if(currIndex === 0){
+      console.log('leftnone');
       leftArrow.style.display = 'none';
-    }else if(currIndex === lastIndex){
-      rightArrow.style.display = 'none';
-    }else{
+    } else{
+      console.log('leftshow');
       leftArrow.removeAttribute('style');
+    }
+    if(currIndex === lastIndex){
+      console.log('rightnone');
+      rightArrow.style.display = 'none';
+    } else{
+      console.log('rightshow');
       rightArrow.removeAttribute('style');
     }
   }
