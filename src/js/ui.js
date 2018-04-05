@@ -25,9 +25,9 @@ class UI {
         <div class="fixed-action-btn">
           <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
           <ul>
-            <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons deleteTab">delete</i></a></li>
-            <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab">refresh</i></a></li>
-            <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn">star</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons deleteTab tooltipped" data-position="left" data-tooltip="Delete this location">delete</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab tooltipped" data-position="left" data-tooltip="Refresh weather">refresh</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn tooltipped" data-position="left" data-tooltip="Set as default">star</i></a></li>
           </ul>
         </div>
         <h1 class="red-text location"></h1>
@@ -174,17 +174,13 @@ class UI {
     console.log(currIndex, lastIndex);
 
     if(currIndex === 0){
-      console.log('leftnone');
       leftArrow.style.display = 'none';
     } else{
-      console.log('leftshow');
       leftArrow.removeAttribute('style');
     }
     if(currIndex === lastIndex){
-      console.log('rightnone');
       rightArrow.style.display = 'none';
     } else{
-      console.log('rightshow');
       rightArrow.removeAttribute('style');
     }
   }

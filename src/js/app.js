@@ -12,6 +12,7 @@ var weatherTabs;
 var addModal;
 var deleteModal;
 var fabs;
+var toolTips;
 
 
 // EVENT LISTENERS
@@ -57,6 +58,8 @@ function initMaterialize(){
   initModal();
 
   initFAB();
+
+  initToolTips();
 }
 
 // Initialize tabs
@@ -100,6 +103,20 @@ function reinitFAB(){
   initFAB();
 }
 
+// Initialize Tooltips
+function initToolTips(){
+  const tt = document.querySelectorAll('.tooltipped');
+  toolTips = M.Tooltip.init(tt, {});
+}
+
+// Reinitialize Tooltips
+function reinitToolTips(){
+  toolTips.forEach(tt => {
+    tt.destroy();
+  });
+  initToolTips();
+}
+
 // Show add tab modal
 function showAddModal(){
   addModal.open();
@@ -117,6 +134,7 @@ function addWeatherTab(){
     reinitTabs();
     weatherTabs.select(`${key}`);
     reinitFAB();
+    reinitToolTips();
   });
 }
 
