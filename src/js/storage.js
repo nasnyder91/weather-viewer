@@ -103,6 +103,23 @@ class Storage {
     }
   }
 
+  // Set location as default (first)
+  setDefault(key, index){
+    let locs;
+
+    if(localStorage.getItem('weatherLocs') === null){
+      locs = this.defaultWeatherLocs;
+    } else{
+      locs = JSON.parse(localStorage.getItem('weatherLocs'));
+    }
+
+    let loc = locs[index];
+    locs.splice(index, 1);
+    locs.splice(0, 0, loc);
+
+    localStorage.setItem('weatherLocs', JSON.stringify(locs));
+  }
+
   // ---------------------------------------- SESSION STORAGE -----------------------------------------------------
 
   // Get weather data

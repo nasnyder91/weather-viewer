@@ -27,6 +27,7 @@ class UI {
           <ul>
             <li><a class="btn-floating btn waves-effect waves-light red"><i class="material-icons deleteTab">delete</i></a></li>
             <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab">refresh</i></a></li>
+            <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn">star</i></a></li>
           </ul>
         </div>
         <h1 class="red-text location"></h1>
@@ -165,6 +166,22 @@ class UI {
     targetTab.querySelector('.wind3').textContent = `Wind: ${forecast[3].avewind.dir} at ${forecast[3].avewind.mph} to ${forecast[3].maxwind.mph} mph`;
   }
 
+  // Hide or show arrows
+  hideShowArrows(key, currIndex, lastIndex){
+    const card = this.weatherCards.querySelector(`#${key}`);
+    const leftArrow = card.querySelector('.leftArrow');
+    const rightArrow = card.querySelector('.rightArrow');
+
+    if(currIndex === 0){
+      leftArrow.style.display = 'none';
+    }else if(currIndex === lastIndex){
+      rightArrow.style.display = 'none';
+    }else{
+      leftArrow.removeAttribute('style');
+      rightArrow.removeAttribute('style');
+    }
+  }
+
   // Show loading spinner
   showSpinner(targetTabID){
     const targetTab = this.weatherCards.querySelector(targetTabID);
@@ -215,6 +232,17 @@ class UI {
     }
     const card = this.weatherCards.querySelector(id);
     card.parentNode.removeChild(card);
+
+    callback();
+  }
+
+  // Set tab as default
+  setDefault(index, callback){
+    const tabs = this.tabsList.querySelectorAll('.tab');
+    const cards = this.weatherCards.querySelectorAll('.carousel-item');
+
+    tabs[index].parentNode.insertBefore(tabs[index], tabs[0]);
+    cards[index].parentNode.insertBefore(cards[index], cards[0]);
 
     callback();
   }

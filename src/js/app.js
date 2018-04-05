@@ -29,9 +29,16 @@ document.querySelector('#weatherCards').addEventListener('click', (e) => {
   showDeleteModal(e);
   refreshTab(e);
   arrowClicked(e);
+  setDefault(e);
 });
 // Confirm add weather event listener
 document.querySelector('#confirmWeatherBtn').addEventListener('click', addWeatherTab);
+// Confirm add weather with enter key event listener
+document.addEventListener('keyup', (e) => {
+  if(((e.target.id === 'newCity') || (e.target.id === 'newState')) && (e.key === 'Enter')){
+    addWeatherTab();
+  }
+});
 // Confirm delete tab event listener
 document.querySelector('#confirmDeleteBtn').addEventListener('click', () => deleteWeatherTab());
 
@@ -163,7 +170,20 @@ function arrowClicked(e){
     newTab = weatherTabs.$tabLinks[weatherTabs.index + 1].attributes[1].value.substr(1);
     weatherTabs.select(newTab);
   }
+}
 
+// Set tab as default
+function setDefault(e){
+  if(e.target.classList.contains('setDefaultBtn')){
+    if((weatherTabs.index === 0) || (weatherTabs.$tabLinks.length < 2)){
+      return;
+    }
+    const key = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+    storage.setDefault(key, weatherTabs.index);
+    ui.setDefault(weatherTabs.index, () => {
+      reinitTabs();
+    });
+  }
 }
 
 // End weather tab slide
@@ -173,6 +193,8 @@ function tabSlideEnded(e){
     if(key.includes('#')){
       key = key.slice(key.indexOf('#') + 1);
     }
+    ui.hideShowArrows(key, weatherTabs.index, weatherTabs.$tabLinks.length-1);
+
     handleTab(key);
   }
 }
