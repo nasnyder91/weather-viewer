@@ -23,6 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadWeatherTabs();
   initMaterialize();
 });
+window.addEventListener('resize', () => {
+});
 // Weather tab transition end event listener
 document.querySelector('#weatherTabs').addEventListener('transitionend', tabSlideEnded);
 // Add weather tab event listener

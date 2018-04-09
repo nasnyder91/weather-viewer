@@ -18,7 +18,7 @@ class UI {
     this.tabsList.appendChild(newTab);
 
     const newCard = document.createElement('div');
-    newCard.className = 'card blue-grey darken-1 bgCover';
+    newCard.className = 'card cityCard blue-grey darken-1 bgCover';
     newCard.id = `${key}`;
     newCard.innerHTML = `
       <div class="card-content white-text center-align">
@@ -30,14 +30,16 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn tooltipped" data-position="left" data-tooltip="Set as default">star</i></a></li>
           </ul>
         </div>
-        <h1 class="red-text location shadowedText"></h1>
-        <p class="red-text time shadowedText"></p>
-        <h4 class="red-text w-overview shadowedText"></h4>
-        <h5 class="red-text shadowedText">TEMP: <span class="temp"></span></h5>
+        <div class="card quarter-opaque">
+          <h1 class="red-text location shadowedText"></h1>
+          <p class="red-text time shadowedText"></p>
+          <h4 class="red-text w-overview shadowedText"></h4>
+          <h5 class="red-text shadowedText">TEMP: <span class="temp"></span></h5>
+        </div>
         <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
         <div class="row">
           <div class="col s12 l10 offset-l1 xl8 offset-xl2">
-            <div class="col s10 offset-s1 l4">
+            <div class="col s12 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date1">DATE</span>
@@ -49,7 +51,7 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s10 offset-s1 l4">
+            <div class="col s12 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date2">DATE</span>
@@ -61,7 +63,7 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s10 offset-s1 l4">
+            <div class="col s12 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date3">DATE</span>

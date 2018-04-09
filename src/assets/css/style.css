@@ -1,4 +1,6 @@
-@import '992up.css' screen and (min-width: 992px);
+@import '992up.css' only screen and (min-width: 992px);
+@import '300up.css' only screen and (min-width: 300px);
+@import url('https://fonts.googleapis.com/css?family=Exo');
 
 body,html{
     width: 100%;
@@ -7,18 +9,19 @@ body,html{
     padding: 0px;
     overflow-x:hidden;
     font-size: 1rem;
+    font-family: 'Exo', sans-serif;
 }
 
 .card, .card-content {
   height:auto;
 }
 
-.card {
+.cityCard {
   margin: 0 !important;
 }
 
 .forecastCard{
-  margin: 5px 0px 5px 0px;
+  margin: 5px 5px 5px 5px;
 }
 
 .bgCover{
@@ -30,6 +33,10 @@ body,html{
 .carousel {
   height: 1200px;
   box-shadow: 0px 0px 20px #000;
+}
+
+.quarter-opaque{
+  background-color: rgba(255, 255, 255, 0.4) !important;
 }
 
 .half-opaque {
