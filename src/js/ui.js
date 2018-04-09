@@ -21,6 +21,13 @@ class UI {
     newCard.className = 'card cityCard blue-grey darken-1 bgCover';
     newCard.id = `${key}`;
     newCard.innerHTML = `
+      <div class="half-opaque center-align">
+        <span class="card-title red-text location shadowedText"></span>
+        <br />
+        <p class="red-text time shadowedText"></p>
+        <p class="red-text w-overview shadowedText"></p>
+        <p class="red-text shadowedText"><span class="temp"></span></p>
+      </div>
       <div class="card-content white-text center-align">
         <div class="fixed-action-btn">
           <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
@@ -29,12 +36,6 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons refreshTab tooltipped" data-position="left" data-tooltip="Refresh weather">refresh</i></a></li>
             <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn tooltipped" data-position="left" data-tooltip="Set as default">star</i></a></li>
           </ul>
-        </div>
-        <div class="card quarter-opaque">
-          <h1 class="red-text location shadowedText"></h1>
-          <p class="red-text time shadowedText"></p>
-          <h4 class="red-text w-overview shadowedText"></h4>
-          <h5 class="red-text shadowedText">TEMP: <span class="temp"></span></h5>
         </div>
         <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
         <div class="row">

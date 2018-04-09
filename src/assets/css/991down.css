@@ -1,0 +1,8 @@
+body,html{
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.carousel {
+  height: 1200px !important;
+}
