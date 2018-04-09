@@ -3,6 +3,7 @@ import uuidv4 from 'uuid/v4';
 import { ui } from './ui';
 import { weather } from './weather';
 import { storage } from './storage';
+import { formSubmit } from './formsubmit';
 
 import 'materialize-css/dist/css/materialize.css';
 import '../assets/css/style.css';
@@ -11,6 +12,7 @@ import '../assets/css/style.css';
 var weatherTabs;
 var addModal;
 var deleteModal;
+var contactModal;
 var fabs;
 var toolTips;
 
@@ -42,6 +44,8 @@ document.addEventListener('keyup', (e) => {
 });
 // Confirm delete tab event listener
 document.querySelector('#confirmDeleteBtn').addEventListener('click', () => deleteWeatherTab());
+// Submit form
+document.querySelector('#contactForm').addEventListener('submit', submitForm);
 
 // Load tabs on startup
 function loadWeatherTabs(){
@@ -83,16 +87,20 @@ function reinitTabs(){
 function initModal(){
   var addTab = document.querySelector('#addModal');
   var deleteTab = document.querySelector('#deleteModal');
+  var openContact = document.querySelector('#contactModal');
   addModal = M.Modal.init(addTab, {
     onCloseStart: () => ui.hideAddErr()
   });
   deleteModal = M.Modal.init(deleteTab, {});
+  contactModal = M.Modal.init(openContact, {});
 }
 
 // Initialize floating action buttons
 function initFAB(){
   const fab = document.querySelectorAll('.fixed-action-btn');
-  fabs = M.FloatingActionButton.init(fab, {});
+  fabs = M.FloatingActionButton.init(fab, {
+    direction: 'top'
+  });
 }
 
 // Reinitialize floating action buttons
@@ -276,4 +284,11 @@ function getWeather(city, state, targetTabID){
         ui.showAddErr('Something went wrong.  Please try again.');
       }
     });
+}
+
+// Submit contact form
+function submitForm(e){
+  e.preventDefault();
+
+  formSubmit.submitForm();
 }

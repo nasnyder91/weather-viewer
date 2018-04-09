@@ -8,12 +8,12 @@
   <link rel="stylesheet" href="../src/assets/css/style.css">
   <title>WeatherViewer</title>
 </head>
-<body class="light-blue darken-4">
-  <div class="navbar-fixed nav-extended">
+<body class="grey lighten-4">
+  <div class="navbar-fixed" >
     <nav>
-      <div class="nav-wrapper orange accent-3">
+      <div class="nav-wrapper blue lighten-4">
         <div class="container">
-          <span class="brand-logo">WeatherViewer</span>
+          <span class="brand-logo center black-text text-lighten-3">WeatherViewer</span>
         </div>
       </div>
     </nav>
@@ -22,7 +22,7 @@
   <div class="row white">
     <div class="col s10 offset-s1">
       <ul id="weatherTabs" class="tabs valign-wrapper">
-        <li><a class="btn-floating btn waves-effect waves-light green"><i class="material-icons tooltipped"  data-position="bottom" data-tooltip="Add a new location" id="addTab">add_location</i></a></li>
+        <li id="newLocBtn"><a class="btn-floating btn-small waves-effect waves-light green"><i class="material-icons tooltipped" data-position="bottom" data-tooltip="Add a new location" id="addTab">add_location</i></a></li>
       </ul>
     </div>
   </div>
@@ -68,6 +68,54 @@
     </div>
   </div>
 
+  <!-- Contact modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <h4>Contact Me</h4>
+      <p>Visit my website: <a href="https://www.snyderdeveloper.com" target="_blank">SnyderDeveloper</a></p>
+
+
+      <h6 class="orange-text" id="formThankYou" style="display:none">Your message has been sent.  Thank you.</h6>
+      <form class='col s12' id="contactForm" method="POST" novalidate>
+        <div class='input-field'>
+          <input class='validate' id="name" type='text' name="name" required>
+          <label for="name">Name</label>
+          <span class="helper-text" data-error="Please enter your name"></span>
+        </div>
+        <div class='input-field'>
+          <input class='validate' id="email" type='email' name="email" required>
+          <label for="email">E-Mail</label>
+          <span class="helper-text" data-error="Please enter a valid email address."></span>
+        </div>
+        <div class='input-field'>
+          <textarea id='message' class='materialize-textarea validate' name='comment' required></textarea>
+          <label for="message">Message</label>
+          <span class="helper-text" data-error="Please enter a message"></span>
+        </div>
+        <input type='submit' value="Send" class='btn waves-effect'>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Page footer -->
+  <footer class="page-footer blue lighten-4">
+    <div class="container black-text">
+      <div class="copyright valign-wrapper">
+        © 2018 Nick Snyder
+        <a class="right modal-trigger red-text text-lighten-1" id="contactBtn" href="#contactModal">Contact Me</a>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col s12 l1 center-align">
+          <a href="https://www.wunderground.com/" target="_blank"><img src="./assets/img/wundergroundLogo.png" alt="" style="width: 130px;"></a>
+        </div>
+        <div class="col s12 l1 offset-l1 center-align">
+          <a href="http://www.materializecss.com/" target="_blank"><img src="./assets/img/materializeLogo.svg" alt="" style="width: 130px;"></a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>

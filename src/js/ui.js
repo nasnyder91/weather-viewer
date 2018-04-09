@@ -18,7 +18,7 @@ class UI {
     this.tabsList.appendChild(newTab);
 
     const newCard = document.createElement('div');
-    newCard.className = 'card blue-grey darken-1';
+    newCard.className = 'card blue-grey darken-1 bgCover';
     newCard.id = `${key}`;
     newCard.innerHTML = `
       <div class="card-content white-text center-align">
@@ -30,15 +30,15 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn tooltipped" data-position="left" data-tooltip="Set as default">star</i></a></li>
           </ul>
         </div>
-        <h1 class="red-text location"></h1>
-        <p class="red-text time"></p>
-        <h4 class="red-text w-overview"></h4>
-        <p class="red-text">TEMP: <span class="temp"></span></p>
+        <h1 class="red-text location shadowedText"></h1>
+        <p class="red-text time shadowedText"></p>
+        <h4 class="red-text w-overview shadowedText"></h4>
+        <h5 class="red-text shadowedText">TEMP: <span class="temp"></span></h5>
         <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
         <div class="row">
-          <div class="col s8 offset-s2">
-            <div class="col s4">
-              <div class="card small half-opaque z-depth-5">
+          <div class="col s12 l10 offset-l1 xl8 offset-xl2">
+            <div class="col s10 offset-s1 l4">
+              <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date1">DATE</span>
                   <img class="icon1" src="" alt="" />
@@ -49,8 +49,8 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s4">
-              <div class="card small half-opaque z-depth-5">
+            <div class="col s10 offset-s1 l4">
+              <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date2">DATE</span>
                   <img class="icon2" src="" alt="" />
@@ -61,8 +61,8 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s4">
-              <div class="card small half-opaque z-depth-5">
+            <div class="col s10 offset-s1 l4">
+              <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date3">DATE</span>
                   <img class="icon3" src="" alt="" />
@@ -146,9 +146,9 @@ class UI {
     targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
     targetTab.querySelector('.reveal-temp').textContent = weather.temperature_string;
     // FORECAST
-    targetTab.querySelector('.date1').textContent = `${forecast[1].date.weekday} ${forecast[1].date.month}/${forecast[1].date.day}`;
-    targetTab.querySelector('.date2').textContent = `${forecast[2].date.weekday} ${forecast[2].date.month}/${forecast[2].date.day}`;
-    targetTab.querySelector('.date3').textContent = `${forecast[3].date.weekday} ${forecast[3].date.month}/${forecast[3].date.day}`;
+    targetTab.querySelector('.date1').textContent = `${forecast[1].date.weekday_short} ${forecast[1].date.month}/${forecast[1].date.day}`;
+    targetTab.querySelector('.date2').textContent = `${forecast[2].date.weekday_short} ${forecast[2].date.month}/${forecast[2].date.day}`;
+    targetTab.querySelector('.date3').textContent = `${forecast[3].date.weekday_short} ${forecast[3].date.month}/${forecast[3].date.day}`;
     targetTab.querySelector('.icon1').src = `https://icons.wxug.com/i/c/k/${forecast[1].icon}.gif`;
     targetTab.querySelector('.icon1').alt = `${forecast[1].icon}`;
     targetTab.querySelector('.icon2').src = `https://icons.wxug.com/i/c/k/${forecast[2].icon}.gif`;
@@ -171,7 +171,6 @@ class UI {
     const card = this.weatherCards.querySelector(`#${key}`);
     const leftArrow = card.querySelector('.leftArrow');
     const rightArrow = card.querySelector('.rightArrow');
-    console.log(currIndex, lastIndex);
 
     if(currIndex === 0){
       leftArrow.style.display = 'none';
