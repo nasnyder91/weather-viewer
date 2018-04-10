@@ -1,5 +1,6 @@
 @import '992up.css' only screen and (min-width: 992px);
 @import '991down.css' only screen and (max-width: 991px);
+@import '650up.css' only screen and (min-width: 650px);
 @import '300up.css' only screen and (min-width: 300px);
 @import url('https://fonts.googleapis.com/css?family=Exo');
 
@@ -21,6 +22,10 @@ body,html{
 
 .cityCard {
   margin: 0 !important;
+}
+
+.detailsBtn{
+
 }
 
 .forecastCard{
@@ -100,7 +105,7 @@ body,html{
 }
 
 .tabs .tab a{
-  font-size: 1.3rem !important;
+  font-size: 1.3rem;
   color:#000;
 } /*Black color to the text*/
 
@@ -109,15 +114,20 @@ body,html{
   color:#000;
 } /*Text color on hover*/
 
-.tabs .tab a.active {
-  background-color:#888;
-  color:#000;
-} /*Background and text color when a tab is active*/
+.tabs .tab a:focus, .tabs .tab a:focus.active, .tabs .tab a.active {
+    background-color: #e3f2fd;
+    color:#000;
+    outline: none;
+}/*Background and text color when a tab is active*/
 
 .tabs .indicator {
-  background-color:#000;
+  background-color:#90caf9;
 } /*Color of underline*/
 
 .shadowedText{
-  text-shadow: 2px 2px 10px #000;
+  text-shadow: 1px 2px 4px #000;
+}
+
+.heavyText{
+  font-weight: 600 !important;
 }

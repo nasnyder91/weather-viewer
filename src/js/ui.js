@@ -18,16 +18,20 @@ class UI {
     this.tabsList.appendChild(newTab);
 
     const newCard = document.createElement('div');
-    newCard.className = 'card cityCard blue-grey darken-1 bgCover';
+    newCard.className = 'card cityCard blue-grey darken-1 bgCover center-align';
     newCard.id = `${key}`;
     newCard.innerHTML = `
       <div class="half-opaque center-align">
-        <span class="card-title red-text location shadowedText"></span>
+        <small class="blue-grey-text text-lighten-2 time"></small>
         <br />
-        <p class="red-text time shadowedText"></p>
-        <p class="red-text w-overview shadowedText"></p>
-        <p class="red-text shadowedText"><span class="temp"></span></p>
+        <span class="card-title grey-text text-darken-3 location heavyText"></span>
+        <br />
+        <img class="icon" src="" alt="" />
+        <br />
+        <span class=" grey-text text-darken-2 w-overview"></span>
+        <p class=" grey-text text-darken-2">TEMP: <span class="temp"></span></p>
       </div>
+      <a class="waves-effect activator btn-floating detailsBtn red darken-4"><i class="material-icons">menu</i></a>
       <div class="card-content white-text center-align">
         <div class="fixed-action-btn">
           <a class="btn-floating btn-large yellow darken-4"><i class="material-icons" id="deleteTab">mode_edit</i></a>
@@ -37,10 +41,10 @@ class UI {
             <li><a class="btn-floating btn waves-effect waves-light blue"><i class="material-icons setDefaultBtn tooltipped" data-position="left" data-tooltip="Set as default">star</i></a></li>
           </ul>
         </div>
-        <a class="waves-effect activator btn"><i class="material-icons">menu</i></a>
+
         <div class="row">
           <div class="col s12 l10 offset-l1 xl8 offset-xl2">
-            <div class="col s12 l4">
+            <div class="col s12 m8 offset-m2 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date1">DATE</span>
@@ -52,7 +56,7 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s12 l4">
+            <div class="col s12 m8 offset-m2 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date2">DATE</span>
@@ -64,7 +68,7 @@ class UI {
                 </div>
               </div>
             </div>
-            <div class="col s12 l4">
+            <div class="col s12 m8 offset-m2 l4">
               <div class="card forecastCard half-opaque z-depth-5">
                 <div class="card-content black-text">
                   <span class="card-title date3">DATE</span>
@@ -137,6 +141,8 @@ class UI {
     targetTab.style.backgroundImage = `url(${cardBG})`;
     targetTab.querySelector('.location').textContent = weather.display_location.full;
     targetTab.querySelector('.time').textContent = weather.observation_time;
+    targetTab.querySelector('.icon').src = `https://icons.wxug.com/i/c/k/${weather.icon}.gif`;
+    targetTab.querySelector('.icon').alt = `${weather.icon}`;
     targetTab.querySelector('.w-overview').textContent = weather.weather;
     targetTab.querySelector('.temp').textContent = weather.temperature_string;
     targetTab.querySelector('.reveal-location').textContent = weather.display_location.full;
