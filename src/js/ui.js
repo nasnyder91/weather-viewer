@@ -115,13 +115,13 @@ class UI {
     `;
 
     const leftArrow = document.createElement('a');
-    leftArrow.className = 'leftArrow arrow valign-wrapper';
+    leftArrow.className = 'leftArrow arrow valign-wrapper hide-on-med-and-down';
     leftArrow.innerHTML = `
       <i class="medium material-icons leftArrow">keyboard_arrow_left</i>
     `;
 
     const rightArrow = document.createElement('a');
-    rightArrow.className = 'rightArrow arrow valign-wrapper';
+    rightArrow.className = 'rightArrow arrow valign-wrapper hide-on-med-and-down';
     rightArrow.innerHTML = `
       <i class="medium material-icons rightArrow">keyboard_arrow_right</i>
     `;
