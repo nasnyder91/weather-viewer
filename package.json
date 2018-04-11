@@ -1,7 +1,7 @@
 {
-  "name": "webpackstarter",
+  "name": "weatherviewer",
   "version": "1.0.0",
-  "description": "Simple webpack starter kit utilizing css-loader, html-loader, and babel-loader.",
+  "description": "Weather viewer with forecast and tabs for multiple locations.",
   "main": "app.js",
   "scripts": {
     "dev": "webpack --output ./dev/app.bundle.js --mode development",
