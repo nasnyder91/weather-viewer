@@ -7,7 +7,7 @@ import { formSubmit } from './formsubmit';
 
 import 'materialize-css/dist/css/materialize.css';
 import '../assets/css/style.css';
-// import 'material-design-icons/iconfont/material-icons.css';
+
 
 var weatherTabs;
 var addModal;
@@ -116,7 +116,9 @@ function reinitFAB(){
 // Initialize Tooltips
 function initToolTips(){
   const tt = document.querySelectorAll('.tooltipped');
-  toolTips = M.Tooltip.init(tt, {});
+  toolTips = M.Tooltip.init(tt, {
+    exitDelay: 100
+  });
 }
 
 // Reinitialize Tooltips

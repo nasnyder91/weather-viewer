@@ -1,6 +1,11 @@
 import uuidv4 from 'uuid/v4';
 import { backgrounds } from './backgrounds';
 import { storage } from './storage';
+import windIcon from '../assets/img/windIcon.png';
+import humidityIcon from '../assets/img/humidityIcon.png';
+import pressureIcon from '../assets/img/pressureIcon.png';
+import tempIcon from '../assets/img/tempIcon.png';
+import weatherIcon from '../assets/img/weatherIcon.png';
 
 class UI {
   constructor(){
@@ -84,18 +89,55 @@ class UI {
         </div>
       </div>
       <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
-        <ul class="collection">
-          <li class="collection-item">WEATHER: <span class="reveal-w-overview">WEATHER OVERVIEW</span></li>
-          <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
-          <li class="collection-item">FEELS LIKE: <span class="feels-like">F/C</span></li>
-          <li class="collection-item">WIND: <span class="wind">Wind</span></li>
-          <li class="collection-item">HUMIDITY: <span class="humidity">Humidity</span></li>
-          <li class="collection-item">PRESSURE: <span class="pressure">Pressure</span></li>
-        </ul>
+        <span class="card-title red-text text-lighten-1 heavyText"><span class="reveal-location">LOCATION</span><i class="material-icons right">close</i></span>
+        <hr />
+        <div class="container">
+          <div class="row detailsGrid">
+             <div class="col s12 l4">
+                <div class="col s12 m6 l12">
+                  <img src="${weatherIcon}" alt="" />
+                  <p class="heavyText blue-text text-darken-2">WEATHER</p>
+                  <span class="reveal-w-overview">WEATHER OVERVIEW</span>
+                </div>
+                <div class="col s12 m6 l12">
+                  <img src="${humidityIcon}" alt="" />
+                  <p class="heavyText blue-text text-darken-2">HUMIDITY</p>
+                  <span class="humidity">Humidity</span>
+                </div>
+               </div>
+               <div class="col s12 l4">
+                <img src="${tempIcon}" alt="" />
+                <p class="heavyText blue-text text-darken-2">TEMP</p>
+                <span class="reveal-temp">F/C</span>
+                <p class="heavyText blue-text text-darken-2">FEELS LIKE</p>
+                <span class="feels-like">F/C</span>
+               </div>
+               <div class="col s12 s12 l4">
+                <div class="col m6 l12">
+                  <img src="${windIcon}" alt="" />
+                  <p class="heavyText blue-text text-darken-2">WIND</p>
+                  <span class="wind">Wind</span>
+                </div>
+                <div class="col s12 m6 l12">
+                  <img src="${pressureIcon}" alt="" />
+                  <p class="heavyText blue-text text-darken-2">PRESSURE</p>
+                  <span class="pressure">Pressure</span>
+                </div>
+             </div>
+          </div>
+        </div>
+
       </div>
     `;
-
+    //
+    // <ul class="collection">
+    //   <li class="collection-item">WEATHER: <span class="reveal-w-overview">WEATHER OVERVIEW</span></li>
+    //   <li class="collection-item">TEMP: <span class="reveal-temp">F/C</span></li>
+    //   <li class="collection-item">FEELS LIKE: <span class="feels-like">F/C</span></li>
+    //   <li class="collection-item">WIND: <span class="wind">Wind</span></li>
+    //   <li class="collection-item">HUMIDITY: <span class="humidity">Humidity</span></li>
+    //   <li class="collection-item">PRESSURE: <span class="pressure">Pressure</span></li>
+    // </ul>
     const spinner = document.createElement('div');
     spinner.className = 'spinner cover valign-wrapper bgDarkTransparent';
     spinner.innerHTML = `

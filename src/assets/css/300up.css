@@ -9,3 +9,8 @@
 .tabs .tab a{
   font-size: 1rem !important;
 }
+
+
+.card-reveal .container{
+  margin-top: 20px;
+}

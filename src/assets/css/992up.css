@@ -10,3 +10,7 @@ html{
 .copyright{
   flex-direction: row !important;
 }
+
+.card-reveal .col .col{
+  margin-bottom: 50px;
+}
